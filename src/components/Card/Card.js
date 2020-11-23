@@ -1,22 +1,13 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import styles from './Card.module.scss';
 
-const Card = ({ imgSrc }) => {
-  const [showImg, setShowImg] = useState(false);
-
-  const handleShowImg = () => {
-    setShowImg(true);
-    setTimeout(() => {
-      setShowImg(false);
-    }, 1000);
-  };
-
+const Card = ({ imgSrc, isShowed, onClick }) => {
   return (
     <div
       className={styles['card']}
-      style={{ backgroundImage: showImg ? `url(${imgSrc})` : 'none' }}
-      onClick={handleShowImg}
+      style={{ backgroundImage: isShowed ? `url(${imgSrc})` : 'none' }}
+      onClick={onClick}
     ></div>
   );
 };
