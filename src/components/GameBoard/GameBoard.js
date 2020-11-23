@@ -21,8 +21,8 @@ const GameBoard = () => {
 
   return (
     <div className={styles['board-container']}>
-      {cardList.map((_, idx) => {
-        return <Card key={idx} />;
+      {cardList.map((imgSrc, idx) => {
+        return <Card key={idx} imgSrc={imgSrc} />;
       })}
     </div>
   );
