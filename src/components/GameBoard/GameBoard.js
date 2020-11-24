@@ -46,6 +46,7 @@ for (let i = 0; i < 2; i++) {
 
 const GameBoard = () => {
   const [cardList, setCardList] = useState(shuffle(imageListDouble));
+  // const [isMatching, setIsMatching] = useState(false);
 
   const handleClickCard = (idx) => {
     const newCardList = [...cardList];
