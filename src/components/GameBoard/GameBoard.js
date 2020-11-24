@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 import styles from './GameBoard.module.scss';
 import Card from '../Card/Card';
@@ -46,12 +46,54 @@ for (let i = 0; i < 2; i++) {
 
 const GameBoard = () => {
   const [cardList, setCardList] = useState(shuffle(imageListDouble));
-  // const [isMatching, setIsMatching] = useState(false);
+  const [isLockBoard, setIsLockBoard] = useState(false);
+  const firstCardRefObj = useRef(null);
+  const secondCardRefObj = useRef(null);
 
-  const handleClickCard = (idx) => {
+  const checkForMatch = () => {
+    if (
+      cardList[firstCardRefObj.current].imgSrc ===
+      cardList[secondCardRefObj.current].imgSrc
+    ) {
+      console.log('match');
+      firstCardRefObj.current = null;
+      secondCardRefObj.current = null;
+      setIsLockBoard(false);
+    } else {
+      setTimeout(() => {
+        unflipCard(firstCardRefObj.current);
+        unflipCard(secondCardRefObj.current);
+        firstCardRefObj.current = null;
+        secondCardRefObj.current = null;
+        setIsLockBoard(false);
+      }, 1500);
+    }
+  };
+
+  const flipCard = (idx) => {
     const newCardList = [...cardList];
     newCardList[idx].isShowed = true;
     setCardList(newCardList);
+  };
+
+  const unflipCard = (idx) => {
+    const newCardList = [...cardList];
+    newCardList[idx].isShowed = false;
+    setCardList(newCardList);
+  };
+
+  const handleClickCard = (idx) => {
+    if (!cardList[idx].isShowed && !isLockBoard) {
+      flipCard(idx);
+
+      if (firstCardRefObj.current === null) {
+        firstCardRefObj.current = idx;
+      } else {
+        secondCardRefObj.current = idx;
+        setIsLockBoard(true);
+        checkForMatch();
+      }
+    }
   };
 
   return (
