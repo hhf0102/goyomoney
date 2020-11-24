@@ -54,7 +54,7 @@ const GameBoard = () => {
         firstCardRefObj.current = idx;
       } else {
         secondCardRefObj.current = idx;
-        setIsLockBoard(true);
+        setIsLockBoard(true); // to avoid keeping click other cards after the second card is flipped.
         checkForMatch();
       }
     }
@@ -62,7 +62,7 @@ const GameBoard = () => {
 
   useEffect(() => {
     return () => {
-      clearTimeout(timerID);
+      clearTimeout(timerID); // if the component will be destroyed, we need to clear the setTimeout function for better performance.
     };
   }, []);
 

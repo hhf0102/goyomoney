@@ -4,7 +4,7 @@ import styles from './App.module.scss';
 import GameBoard from './components/GameBoard/GameBoard';
 
 function App() {
-  const [boardKey, setBoardKey] = useState(0);
+  const [boardKey, setBoardKey] = useState(0); // to force component's state reset
 
   const handleReset = () => {
     setBoardKey((prevKey) => prevKey + 1);
