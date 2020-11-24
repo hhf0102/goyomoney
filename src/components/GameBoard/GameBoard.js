@@ -12,20 +12,23 @@ const GameBoard = () => {
   const firstCardRefObj = useRef(null);
   const secondCardRefObj = useRef(null);
 
+  const resetCardsRefObj = () => {
+    firstCardRefObj.current = null;
+    secondCardRefObj.current = null;
+  };
+
   const checkForMatch = () => {
     if (
       cardList[firstCardRefObj.current].imgSrc ===
       cardList[secondCardRefObj.current].imgSrc
     ) {
-      firstCardRefObj.current = null;
-      secondCardRefObj.current = null;
+      resetCardsRefObj();
       setIsLockBoard(false);
     } else {
       timerID = setTimeout(() => {
         unflipCard(firstCardRefObj.current);
         unflipCard(secondCardRefObj.current);
-        firstCardRefObj.current = null;
-        secondCardRefObj.current = null;
+        resetCardsRefObj();
         setIsLockBoard(false);
       }, 1500);
     }
