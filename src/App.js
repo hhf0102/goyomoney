@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './App.module.scss';
-import GameBoard from './components/GameBoard/GameBoard';
+
 import styles from './App.module.scss';
+import GameBoard from './components/GameBoard/GameBoard';
 
 function App() {
   const [boardKey, setBoardKey] = useState(0);
@@ -11,11 +11,11 @@ function App() {
   };
 
   return (
-    <div>
+    <div className={styles['app-container']}>
       <GameBoard key={boardKey} />
-      <div className={styles['button-container']}>
-        <button onClick={handleReset}>Reset</button>
-      </div>
+      <button className={styles['button-reset']} onClick={handleReset}>
+        Reset
+      </button>
     </div>
   );
 }
