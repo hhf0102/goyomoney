@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 import styles from './GameBoard.module.scss';
 import Card from '../Card/Card';
@@ -34,17 +34,18 @@ const imageList = [
   card_10,
 ];
 
-let imageListDouble = [];
-
-for (let i = 0; i < 2; i++) {
-  const list = imageList.map((img) => ({
-    imgSrc: img,
-    isShowed: false,
-  }));
-  imageListDouble = imageListDouble.concat(list);
-}
+let timerID = null;
 
 const GameBoard = () => {
+  let imageListDouble = [];
+
+  for (let i = 0; i < 2; i++) {
+    const list = imageList.map((img) => ({
+      imgSrc: img,
+      isShowed: false,
+    }));
+    imageListDouble = imageListDouble.concat(list);
+  }
   const [cardList, setCardList] = useState(shuffle(imageListDouble));
   const [isLockBoard, setIsLockBoard] = useState(false);
   const firstCardRefObj = useRef(null);
@@ -55,12 +56,11 @@ const GameBoard = () => {
       cardList[firstCardRefObj.current].imgSrc ===
       cardList[secondCardRefObj.current].imgSrc
     ) {
-      console.log('match');
       firstCardRefObj.current = null;
       secondCardRefObj.current = null;
       setIsLockBoard(false);
     } else {
-      setTimeout(() => {
+      timerID = setTimeout(() => {
         unflipCard(firstCardRefObj.current);
         unflipCard(secondCardRefObj.current);
         firstCardRefObj.current = null;
@@ -95,6 +95,12 @@ const GameBoard = () => {
       }
     }
   };
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timerID);
+    };
+  }, []);
 
   return (
     <div className={styles['board-container']}>
